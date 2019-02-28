@@ -48,14 +48,16 @@ def econsupportfiles():
     df['Unemployment Rate'] = pd.read_sql("SELECT Unemployment_Rate FROM " + class_id[0]+ " ORDER BY id DESC LIMIT 10", conn)
     df['New orders Date'] = pd.read_sql("SELECT date FROM " + class_id[1]+ " ORDER BY id DESC LIMIT 10", conn)
     df['New Capital Goods Orders'] = pd.read_sql("SELECT Value_of_Manufactuters_New_Orders FROM " + class_id[1]+ " ORDER BY id DESC LIMIT 10", conn)
-    df['Cap goods Date'] = pd.read_sql("SELECT date FROM " + class_id[2] + " ORDER BY id DESC LIMIT 10", conn)
+    df['Cap Goods Date'] = pd.read_sql("SELECT date FROM " + class_id[2] + " ORDER BY id DESC LIMIT 10", conn)
     df['Capital Goods x Defense Aircraft New Orders'] = pd.read_sql("SELECT Manufacturers_New_Orders_Non_Defense_Cap_Goods_x_Air FROM " + class_id[2] + " ORDER BY id DESC LIMIT 10", conn)
-    df['utilization Date'] = pd.read_sql("SELECT date FROM " + class_id[3] + " ORDER BY id DESC LIMIT 10", conn)
-    df['factory utilization rate'] = pd.read_sql("SELECT Capacity_Utilization_Manufacturing FROM " + class_id[3] + " ORDER BY id DESC LIMIT 10", conn)
+    df['Utilization Date'] = pd.read_sql("SELECT date FROM " + class_id[3] + " ORDER BY id DESC LIMIT 10", conn)
+    df['Factory Utilization Rate'] = pd.read_sql("SELECT Capacity_Utilization_Manufacturing FROM " + class_id[3] + " ORDER BY id DESC LIMIT 10", conn)
     df['Weekly Earnings Date'] = pd.read_sql("SELECT date FROM " + class_id[5] + " ORDER BY id DESC LIMIT 10", conn)
     df['Average Weekly Earnings'] = pd.read_sql("SELECT Average_Weekly_Earnings FROM " + class_id[5] + " ORDER BY id DESC LIMIT 10", conn)
+    df = df.drop(columns=['id'])
+    df = df.rename(index=str, columns={'Average_Weekly_Initial_Claims': 'Average Weekly Initial Claims', 'date': 'Initial Claims Date'})
 
-    return render_template('supportfilesecon.html', data=df.to_html())
+    return render_template('supportfilesecon.html', data=df.to_html(index=False, classes='table table-hover table-condensed'))
 
 
 if __name__ == "__main__":
