@@ -49,8 +49,14 @@
     </nav>
     <div class="container">
       <div class="jumbotron">
-        <h1>Display econ support file</h1>
-        <p>...</p>
+        <h1>Last 10 observations for each data set used</h1>
+          <div class='table'>
+            <p>
+              {% block content %}
+              {{data | safe}}
+              {% endblock %}
+          </p>
+        </div>
       </div>
     </div>
   
