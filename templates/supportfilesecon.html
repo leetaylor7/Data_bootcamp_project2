@@ -30,7 +30,7 @@
             <li ><a href="http://127.0.0.1:5000/">Dashboard <span class="sr-only">(current)</span></a></li>
             <li><a href="http://127.0.0.1:5000/CoreListReports">Core List Reports</a></li>
             <li><a href="#">Stray Stock Reports</a></li>
-            <li><a href="#">Economic Reports</a></li>
+            <li><a href="http://127.0.0.1:5000/EconomicReport">Economic Reports</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Support Files <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -50,10 +50,18 @@
     </nav>
     <div class="container">
       <div class="jumbotron">
-        <h2>Last 10 observations for each data set used</h2>
+        <h2>Last 10 observations for each FRED data set used</h2>
       </div>
       {% block content %}
       {{data | safe}}
+    </div>
+    <div class="container">
+      <div class="jumbotron">
+        <h2>All asset return data</h2>
+      </div>
+      {{asset_return | safe}}
       {% endblock %}
     </div>
+
+  </body>
   

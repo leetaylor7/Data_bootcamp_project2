@@ -3,7 +3,6 @@ import pandas as pd
 import datetime
 import json
 import requests
-from pprint import pprint
 
 #Imports all the relevant Modules
 from sqlalchemy import create_engine, inspect, Column, Integer, String
@@ -203,3 +202,11 @@ for o in range(length_list[5]):
             continue
 
 session.commit()
+
+#---------------------------------
+#This populates the CSV into SQLite
+#---------------------------------
+#Reads the CSV file
+Asset_returns = pd.read_excel('Resources/Asset Class Returns.xlsx')
+#Inserts it into the sql file
+Asset_returns.to_sql(con=conn, name='asset_returns', if_exists='replace')

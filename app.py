@@ -1,17 +1,15 @@
 # import necessary libraries
 from flask import Flask, render_template
+import econdatapull
 
 #Imports all dependencies
 import pandas as pd
 import datetime
 import json
 import requests
-from pprint import pprint
 from sqlalchemy import create_engine, inspect, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Float, Date 
-import pymysql
-pymysql.install_as_MySQLdb()
 Base = declarative_base()
 import sqlite3
 from sqlalchemy.orm import Session
@@ -30,6 +28,11 @@ def index():
 def CoreListReports():
 
     return render_template('corelistreports.html')
+
+@app.route('/EconomicReport')
+def economicreport():
+
+    return render_template('economicreport.html')
 
 @app.route('/supportfilesecon')
 def econsupportfiles():
@@ -54,10 +57,22 @@ def econsupportfiles():
     df['Factory Utilization Rate'] = pd.read_sql("SELECT Capacity_Utilization_Manufacturing FROM " + class_id[3] + " ORDER BY id DESC LIMIT 10", conn)
     df['Weekly Earnings Date'] = pd.read_sql("SELECT date FROM " + class_id[5] + " ORDER BY id DESC LIMIT 10", conn)
     df['Average Weekly Earnings'] = pd.read_sql("SELECT Average_Weekly_Earnings FROM " + class_id[5] + " ORDER BY id DESC LIMIT 10", conn)
+    df['date'] = pd.to_datetime(df['date'])
+    df['Unemployment Date'] = pd.to_datetime(df['Unemployment Date'])
+    df['New orders Date'] = pd.to_datetime(df['New orders Date'])
+    df['Cap Goods Date'] = pd.to_datetime(df['Cap Goods Date'])
+    df['Utilization Date'] = pd.to_datetime(df['Utilization Date'])
+    df['Weekly Earnings Date'] = pd.to_datetime(df['Weekly Earnings Date'])
     df = df.drop(columns=['id'])
-    df = df.rename(index=str, columns={'Average_Weekly_Initial_Claims': 'Average Weekly Initial Claims', 'date': 'Initial Claims Date'})
+    df = df.rename(index=str, columns={'Average_Weekly_Initial_Claims': 'Weekly Initial Claims', 'date': 'Initial Claims Date'})
 
-    return render_template('supportfilesecon.html', data=df.to_html(index=False, classes='table table-hover table-condensed'))
+    asset_returns = pd.read_sql("SELECT * FROM asset_returns", conn)
+    asset_returns = asset_returns.drop(columns=['index'])
+    asset_returns['Year'] = pd.to_datetime(asset_returns['Year'])
+
+
+    #Populates the DataFrames into an HTML format
+    return render_template('supportfilesecon.html', data=df.to_html(index=False, classes='table table-hover table-condensed'), asset_return=asset_returns.to_html(index=False, classes='table table-hover table-condensed'))
 
 
 if __name__ == "__main__":
