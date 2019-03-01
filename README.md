@@ -1,6 +1,6 @@
 #-----------------------------------------------
 #Summary of the ETL project
-#----------------------------------------------
+#----------------------------------------------#
 
 #The goals of this project were to:
 - Extract data from two seperate sources.
@@ -33,6 +33,6 @@
 
 #--------------------------------------
 #FILE KEY
-#--------------------------------------
+#--------------------------------------#
 - econdatapull.py handles all of the ETL requirements
 - app.py is the app that create the dashboard and displays the data for end user purposes. 
