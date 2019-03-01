@@ -2,7 +2,7 @@
 #Summary of the ETL project
 #----------------------------------------------
 
-The goals of this project were to:
+#The goals of this project were to:
 - Extract data from two seperate sources.
 - Transorm the data.
 - Load the data into a database.
